@@ -57,78 +57,40 @@
             <label><input type="checkbox" name="q3" value="C"> Raw eggs and pre-workout</label>
         </div>
 
-        <!-- Add 12 more questions below with similar format -->
-        <div class="question"><p>4. Certified width of a Big Back?</p>
+        <div class="question">
+            <p>4. Certified width of a Big Back?</p>
             <label><input type="checkbox" name="q4" value="A"> As wide as the canyon</label><br>
             <label><input type="checkbox" name="q4" value="B"> As wide as respect demands</label><br>
             <label><input type="checkbox" name="q4" value="C"> At least 3 pull-ups wide</label>
         </div>
 
-        <div class="question"><p>5. Ideal rep range?</p>
+        <div class="question">
+            <p>5. Ideal rep range?</p>
             <label><input type="checkbox" name="q5" value="A"> 1-3</label><br>
             <label><input type="checkbox" name="q5" value="B"> 8-12</label><br>
             <label><input type="checkbox" name="q5" value="C"> 20-25</label>
         </div>
 
-        <!-- More questions would go here... -->
+        <div class="question">
+            <p>6. What’s a big back made of?</p>
+            <label><input type="checkbox" name="q6" value="A"> Muscle and steel</label><br>
+            <label><input type="checkbox" name="q6" value="B"> Chicken and pain</label><br>
+            <label><input type="checkbox" name="q6" value="C"> Determination and dumbbells</label>
+        </div>
 
-        <button type="submit" class="submit-btn">Submit Quiz</button>
-    </form>
+        <div class="question">
+            <p>7. Best time to train?</p>
+            <label><input type="checkbox" name="q7" value="A"> Morning</label><br>
+            <label><input type="checkbox" name="q7" value="B"> Night</label><br>
+            <label><input type="checkbox" name="q7" value="C"> All the time</label>
+        </div>
 
-    <p id="result"></p>
+        <div class="question">
+            <p>8. Traditional greeting?</p>
+            <label><input type="checkbox" name="q8" value="A"> Back slap and nod</label><br>
+            <label><input type="checkbox" name="q8" value="B"> Flex and turn</label><br>
+            <label><input type="checkbox" name="q8" value="C"> Gym bro fist bump</label>
+        </div>
 
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-    <script>
-        // Initialize EmailJS
-        emailjs.init("fBwObR_tKYEjPcn4G");
+        <
 
-        const answers = {
-            q1: ["A", "B"],
-            q2: ["B", "A"],
-            q3: ["C", "B"],
-            q4: ["A", "B"],
-            q5: ["B", "C"],
-            // Add the other answers similarly
-        };
-
-        document.getElementById("quizForm").addEventListener("submit", function(e) {
-            e.preventDefault();
-            let score = 0;
-            let userAnswers = {};
-
-            // Check answers
-            for (let i = 1; i <= 15; i++) {
-                const selected = document.querySelectorAll(`input[name="q${i}"]:checked`);
-                let userAnswer = [];
-                selected.forEach(item => userAnswer.push(item.value));
-
-                // Compare user's answers with the correct answers
-                if (JSON.stringify(userAnswer.sort()) === JSON.stringify(answers[`q${i}`].sort())) {
-                    score++;
-                }
-
-                // Store user's answers to send in email
-                userAnswers[`q${i}`] = userAnswer.join(", ");
-            }
-
-            const result = document.getElementById("result");
-            if (score === 15) {
-                result.textContent = "✅ Certified! You are a true Big Back Master!";
-            } else {
-                result.textContent = `❌ You scored ${score}/15. Keep training and try again!`;
-            }
-
-            // Send email with results using EmailJS
-            emailjs.send('Big_back', 'template_0br65x8', {
-                score: score,
-                userAnswers: JSON.stringify(userAnswers),
-                resultText: result.textContent
-            }).then(function(response) {
-                console.log('Success:', response);
-            }, function(error) {
-                console.log('Error:', error);
-            });
-        });
-    </script>
-</body>
-</html>
