@@ -1,210 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Big Back Master Quiz</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f0f0f0;
-        }
-        h1 {
-            text-align: center;
-        }
-        .question {
-            margin-bottom: 20px;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-        }
-        .submit-btn {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            font-size: 16px;
-        }
-        #result {
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.2em;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Big Back Certification Quiz</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background-color: #fff5e6; }
+    .question { margin-bottom: 20px; }
+    .question h3 { margin-bottom: 10px; }
+    .question label { display: block; margin: 5px 0; }
+    button { padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #ff9933; border: none; border-radius: 5px; }
+    input[type="text"], input[type="email"] { width: 100%; padding: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; }
+  </style>
 </head>
 <body>
-    <h1>Big Back Master Quiz</h1>
-    <form id="quizForm">
-        <!-- Questions -->
-        <div class="question">
-            <p>1. What is the first rule of Big Back Club?</p>
-            <label><input type="radio" name="q1" value="A"> No skipping back day</label><br>
-            <label><input type="radio" name="q1" value="B"> Flex only in mirrors</label><br>
-            <label><input type="radio" name="q1" value="C"> Chicken only on Tuesdays</label>
-        </div>
+  <h1>Big Back Certification Test</h1>
+  <p>Only the truest of Big Backs can pass this. Do you eat like a legend? Prove it.</p>
 
-        <div class="question">
-            <p>2. What's the best pull exercise?</p>
-            <label><input type="radio" name="q2" value="A"> Lat pulldowns</label><br>
-            <label><input type="radio" name="q2" value="B"> Pull-ups</label><br>
-            <label><input type="radio" name="q2" value="C"> Tricep dips</label>
-        </div>
+  <form id="quizForm">
+    <label>Name:</label>
+    <input type="text" id="name" required />
 
-        <div class="question">
-            <p>3. What snack fuels the Big Backs?</p>
-            <label><input type="radio" name="q3" value="A"> Unseasoned chicken and glory</label><br>
-            <label><input type="radio" name="q3" value="B"> Whey protein brownies</label><br>
-            <label><input type="radio" name="q3" value="C"> Raw eggs and pre-workout</label>
-        </div>
+    <label>Email:</label>
+    <input type="email" id="email" required />
 
-        <div class="question">
-            <p>4. Certified width of a Big Back?</p>
-            <label><input type="radio" name="q4" value="A"> As wide as the canyon</label><br>
-            <label><input type="radio" name="q4" value="B"> As wide as respect demands</label><br>
-            <label><input type="radio" name="q4" value="C"> At least 3 pull-ups wide</label>
-        </div>
+    <div id="quiz"></div>
 
-        <div class="question">
-            <p>5. Ideal rep range?</p>
-            <label><input type="radio" name="q5" value="A"> 1-3</label><br>
-            <label><input type="radio" name="q5" value="B"> 8-12</label><br>
-            <label><input type="radio" name="q5" value="C"> 20-25</label>
-        </div>
+    <button type="submit">Submit</button>
+  </form>
 
-        <div class="question">
-            <p>6. What’s a big back made of?</p>
-            <label><input type="radio" name="q6" value="A"> Muscle and steel</label><br>
-            <label><input type="radio" name="q6" value="B"> Chicken and pain</label><br>
-            <label><input type="radio" name="q6" value="C"> Determination and dumbbells</label>
-        </div>
+  <script>
+    emailjs.init("fBwObR_tKYEjPcn4G");
 
-        <div class="question">
-            <p>7. Best time to train?</p>
-            <label><input type="radio" name="q7" value="A"> Morning</label><br>
-            <label><input type="radio" name="q7" value="B"> Night</label><br>
-            <label><input type="radio" name="q7" value="C"> All the time</label>
-        </div>
+    const questions = [
+      { q: "1. Which country eats the most pizza per capita?", o: ["Italy", "USA", "Norway", "Big Back Nation"], a: 2 },
+      { q: "2. What food can expand in your stomach up to 40 times its size?", o: ["Rice", "Gum", "Popcorn", "Hot dogs at a BBQ"], a: 0 },
+      { q: "3. Which animal eats up to 100 pounds of bamboo a day?", o: ["Elephant", "Panda", "Big Back Bear", "Cow"], a: 1 },
+      { q: "4. What’s the most stolen food in the world?", o: ["Candy", "Cheese", "Bacon", "Chicken nuggets"], a: 1 },
+      { q: "5. Which fast food item is the most ordered in America?", o: ["Taco", "Fried Chicken", "Burger", "Pizza"], a: 2 },
+      { q: "6. What’s the Guinness World Record for most hot dogs eaten in 10 mins?", o: ["45", "53", "76", "100 Big Back dogs"], a: 2 },
+      { q: "7. Which organ tells your brain you’re full?", o: ["Heart", "Stomach", "Liver", "Big Back Sensors"], a: 1 },
+      { q: "8. What food item is illegal to carry in groups in Georgia on Sundays?", o: ["Cornbread", "Ice Cream Cone", "Fried Chicken", "Mac & Cheese"], a: 1 },
+      { q: "9. Which of these is NOT a real sandwich?", o: ["Luther Burger", "Fool’s Gold Loaf", "Peanut Pickle Melt", "Crunchy Towel Wrap"], a: 3 },
+      { q: "10. What food holds the record for longest noodle ever made?", o: ["Udon", "Ramen", "Spaghetti", "Yarn"], a: 2 },
+      { q: "11. What country invented French fries?", o: ["France", "Belgium", "USA", "Big Back Land"], a: 1 },
+      { q: "12. Which nut is used to make marzipan?", o: ["Almond", "Peanut", "Pecan", "Big Back Nut"], a: 0 },
+      { q: "13. Which bird is known to overeat before long flights?", o: ["Eagle", "Duck", "Goose", "Penguin"], a: 2 },
+      { q: "14. What dessert shares a name with a weather phenomenon?", o: ["Hurricane Cake", "Tornado Pie", "Baked Alaska", "Foggy Fudge"], a: 2 },
+      { q: "15. What vegetable was the first to be grown in space?", o: ["Potato", "Carrot", "Lettuce", "Cosmic Cucumber"], a: 2 },
+      { q: "16. How many pounds of potatoes does the average American eat per year?", o: ["30 lbs", "70 lbs", "120 lbs", "Infinite"], a: 2 },
+      { q: "17. What vitamin is found in sunlight and cheese?", o: ["A", "B12", "D", "G for Grub"], a: 2 },
+      { q: "18. What food is the moon supposedly made of in nursery rhymes?", o: ["Popcorn", "Cheese", "Eggs", "Rice Cake"], a: 1 },
+      { q: "19. Which of these is NOT a type of pasta?", o: ["Fusilli", "Rotini", "Muffini", "Penne"], a: 2 },
+      { q: "20. What food can Big Backs never eat just one of?", o: ["Dorito", "Apple Slice", "Cheeto", "All of the above"], a: 3 },
+      { q: "21. What’s the scientific name for the fear of cooking?", o: ["Mageirocophobia", "Cookitis", "Spatulanoia", "Flame Fear"], a: 0 },
+      { q: "22. Which fast food chain has a bell in its logo?", o: ["Taco Bell", "Burger King", "McDonald’s", "Back Bell Bites"], a: 0 },
+      { q: "23. Which meat is in a traditional gyro?", o: ["Beef", "Lamb", "Chicken", "Back Beef"], a: 1 },
+      { q: "24. What is tofu made from?", o: ["Beans", "Rice", "Soy", "Big Back Blocks"], a: 2 },
+      { q: "25. Which of these is a real fish?", o: ["Big Back Bass", "Blobfish", "Crinkle Carp", "Soggy Snapper"], a: 1 },
+      { q: "26. What is the national dish of Scotland?", o: ["Haggis", "Back Pudding", "Meatballs", "Choco-Sheep"], a: 0 },
+      { q: "27. Which snack has holes and is tossed in powdered sugar?", o: ["Donut", "Funnel Cake", "Zeppole", "Air Bun"], a: 2 },
+      { q: "28. What’s the name of the sandwich that uses waffles instead of bread?", o: ["Breakfastwich", "Wafflewich", "Chick-n-Wich", "Backwich"], a: 1 },
+      { q: "29. How many Big Backs does it take to finish a buffet?", o: ["10", "5", "1", "Infinite loop"], a: 2 },
+      { q: "30. What is the main food group for a Big Back?", o: ["Pizza", "Meat", "Everything edible", "Protein powder and pride"], a: 2 },
+    ];
 
-        <div class="question">
-            <p>8. Traditional greeting?</p>
-            <label><input type="radio" name="q8" value="A"> Back slap and nod</label><br>
-            <label><input type="radio" name="q8" value="B"> Flex and turn</label><br>
-            <label><input type="radio" name="q8" value="C"> Gym bro fist bump</label>
-        </div>
+    const quizContainer = document.getElementById("quiz");
 
-        <div class="question">
-            <p>9. Required accessory?</p>
-            <label><input type="radio" name="q9" value="A"> Lifting belt</label><br>
-            <label><input type="radio" name="q9" value="B"> Chalk</label><br>
-            <label><input type="radio" name="q9" value="C"> Headphones</label>
-        </div>
+    questions.forEach((q, i) => {
+      const div = document.createElement("div");
+      div.classList.add("question");
+      div.innerHTML = `<h3>${q.q}</h3>` +
+        q.o.map((option, j) => `
+          <label>
+            <input type="radio" name="q${i}" value="${j}" required> ${option}
+          </label>
+        `).join("");
+      quizContainer.appendChild(div);
+    });
 
-        <div class="question">
-            <p>10. Secret to growth?</p>
-            <label><input type="radio" name="q10" value="A"> Consistency</label><br>
-            <label><input type="radio" name="q10" value="B"> Supplements</label><br>
-            <label><input type="radio" name="q10" value="C"> Screaming at weights</label>
-        </div>
+    document.getElementById("quizForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      let score = 0;
+      questions.forEach((q, i) => {
+        const answer = document.querySelector(`input[name=q${i}]:checked`);
+        if (answer && parseInt(answer.value) === q.a) score++;
+      });
 
-        <div class="question">
-            <p>11. Most aesthetic muscle?</p>
-            <label><input type="radio" name="q11" value="A"> Biceps</label><br>
-            <label><input type="radio" name="q11" value="B"> Lats</label><br>
-            <label><input type="radio" name="q11" value="C"> Traps</label>
-        </div>
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
 
-        <div class="question">
-            <p>12. Post-workout ritual?</p>
-            <label><input type="radio" name="q12" value="A"> Ice bath</label><br>
-            <label><input type="radio" name="q12" value="B"> Flex in mirror</label><br>
-            <label><input type="radio" name="q12" value="C"> Eat 2 chickens</label>
-        </div>
-
-        <div class="question">
-            <p>13. Best back finisher?</p>
-            <label><input type="radio" name="q13" value="A"> Deadlifts</label><br>
-            <label><input type="radio" name="q13" value="B"> Bent-over rows</label><br>
-            <label><input type="radio" name="q13" value="C"> Resistance band curls</label>
-        </div>
-
-        <div class="question">
-            <p>14. Big Back motto?</p>
-            <label><input type="radio" name="q14" value="A"> Flex hard or go home</label><br>
-            <label><input type="radio" name="q14" value="B"> Width over everything</label><br>
-            <label><input type="radio" name="q14" value="C"> Strength through suffering</label>
-        </div>
-
-        <div class="question">
-            <p>15. When are you done training?</p>
-            <label><input type="radio" name="q15" value="A"> When I say so</label><br>
-            <label><input type="radio" name="q15" value="B"> When the lat pump tells me</label><br>
-            <label><input type="radio" name="q15" value="C"> Never</label>
-        </div>
-
-        <button type="submit" class="submit-btn">Submit Quiz</button>
-    </form>
-
-    <p id="result"></p>
-
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-    <script>
-        // Initialize EmailJS with your public key
-        emailjs.init("fBwObR_tKYEjPcn4G");
-
-        const answers = {
-            q1: "A",
-            q2: "B",
-            q3: "A",
-            q4: "B",
-            q5: "B",
-            q6: "C",
-            q7: "C",
-            q8: "B",
-            q9: "C",
-            q10: "A",
-            q11: "B",
-            q12: "B",
-            q13: "A",
-            q14: "B",
-            q15: "C"
-        };
-
-        document.getElementById("quizForm").addEventListener("submit", function(e) {
-            e.preventDefault();
-            let score = 0;
-            let userAnswers = {};
-
-            // Check answers
-            for (let i = 1; i <= 15; i++) {
-                const selected = document.querySelector(`input[name="q${i}"]:checked`);
-
-                if (selected && selected.value === answers[`q${i}`]) {
-                    score++;
-                }
-
-                // Store user's answers to send in email
-                userAnswers[`q${i}`] = selected ? selected.value : "No answer";
-            }
-
-            const result = document.getElementById("result");
-            if (score === 15
-               ) {
-                result.textContent = "✅ Certified! You are a true Big Back Master!";
-            } else {
-                result.textContent = `❌ You scored ${score}/15. Keep training and try again!`;
-            }
-
-            // Send email with results using EmailJS
-            emailjs.send('Big_back', 'template_0br65x8', {
-                score: score,
-                userAnswers: JSON.stringify(userAnswers),
-                resultText: result.textContent
-            }).then(function(response) {
-                console.log('Success:', response);
-            }, function(error) {
-                console.log('Error:', error);
-            });
+      if (score >= 20) {
+        emailjs.send("Big_back", "template_0br65x8", {
+          to_name: name,
+          to_email: email,
+          message: `Certified Big Back with score: ${score}/30`
+        }).then(() => {
+          alert("You passed! Certification sent via EmailJS.");
+        }, (err) => {
+          alert("Email failed: " + JSON.stringify(err));
         });
-    </script>
+      } else {
+        alert(`Score: ${score}/30. You need 20+ to pass.`);
+      }
+    });
+  </script>
 </body>
 </html>
+
+<!--
+Answer Key:
+1: 2, 2: 0, 3: 1, 4: 1, 5: 2, 6: 2, 7: 1, 8: 1, 9: 3, 10: 2,
+11: 1, 12: 0, 13: 2, 14: 2, 15: 2, 16: 2, 17: 2, 18: 1, 19: 2, 20: 3,
+21: 0, 22: 0, 23: 1, 24: 2, 25: 1, 26: 0, 27: 2, 28: 1, 29: 2, 30: 2
