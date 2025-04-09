@@ -2,145 +2,236 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Big Back Certification Quiz</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
-    body { font-family: Arial, sans-serif; background: #fefae0; color: #333; margin: 0; padding: 20px; }
-    .hidden { display: none; }
-    .center { text-align: center; }
-    button { padding: 10px 20px; margin: 10px; font-size: 16px; }
-    .certificate, .leaderboard, .question-box { border: 2px solid #ccc; padding: 20px; border-radius: 10px; background: #fff; margin-top: 20px; }
-    .certificate { font-family: 'Comic Sans MS', cursive; text-align: center; background: #fffae6; }
-    .leaderboard ol { padding-left: 20px; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .question h3 {
+      margin-bottom: 5px;
+    }
   </style>
 </head>
 <body>
-  <div id="homeScreen" class="center">
-    <h1>🏋️‍♂️ Big Back Certification 🏋️‍♀️</h1>
-    <button onclick="showSection('quizSection')">Start Quiz</button>
-    <button onclick="showSection('leaderboardSection')">View Leaderboard</button>
-  </div>
+  <h1>Big Back Certification Quiz</h1>
+  <form id="quizForm">
+    <label for="name">Name:</label><br />
+    <input type="text" id="name" name="name" required><br /><br />
+    <label for="email">Email:</label><br />
+    <input type="email" id="email" name="email" required><br /><br />
+    
+    <div id="questions"></div>
 
-  <div id="quizSection" class="hidden">
-    <h2>Big Back Certification Quiz</h2>
-    <form id="quizForm">
-      <label>Name: <input type="text" id="userName" required></label><br><br>
-      <label>Email: <input type="email" id="userEmail" required></label><br><br>
-      <div id="questions"></div>
-      <button type="submit">Submit</button>
-    </form>
-  </div>
+    <button type="submit">Submit</button>
+  </form>
 
-  <div id="leaderboardSection" class="hidden leaderboard">
-    <h2>🍗 Leaderboard of Legends 🍗</h2>
-    <ol id="leaderboardList"></ol>
-    <button onclick="showSection('homeScreen')">Back to Home</button>
-  </div>
-
-  <div id="certificateSection" class="hidden certificate">
-    <h2>🏆 Official Big Back Certificate 🏆</h2>
-    <p id="certName"></p>
-    <p id="certScore"></p>
-    <p>Hereby awarded the title:</p>
-    <h3>“Certified Glutton of Glory”</h3>
-    <p>Signed by Dr. Buff Backs, PhD in Snackology</p>
-    <button onclick="downloadCertificate()">Download Certificate</button>
-    <button onclick="showSection('homeScreen')">Back to Home</button>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas"></script>
   <script>
-    emailjs.init("fBwObR_tKYEjPcn4G"); // Public key
+    emailjs.init('fBwObR_tKYEjPcn4G');
 
     const questions = [
-      { q: "How many calories can a competitive eater consume in one sitting?", a: "c" },
-      { q: "Which food is most commonly used in eating contests?", a: "d" },
-      { q: "Which country is famous for hosting rice-eating competitions?", a: "d" },
-      { q: "What organ primarily expands to store large meals?", a: "a" },
-      { q: "Who is a famous competitive eater from Japan?", a: "b" },
-      { q: "What’s a Big Back likely to do after a huge meal?", a: "c" },
-      { q: "Which programming language is the most Big Back of all?", a: "c" },
-      { q: "What percent of your stomach can stretch during overeating?", a: "b" },
-      { q: "Which is the most likely Big Back Taco Bell order?", a: "b" },
-      { q: "Which hormone helps regulate hunger?", a: "b" },
-      { q: "What is the world record for hot dogs eaten in 10 mins?", a: "c" },
-      { q: "What’s something a Big Back says at a buffet?", a: "b" },
-      { q: "Why would a Big Back drink water before eating?", a: "b" },
-      { q: "Which veggie is negative-calorie?", a: "b" },
-      { q: "Which would excite a Big Back the most?", a: "c" },
-      { q: "Which fries are dangerously bottomless?", a: "c" },
-      { q: "Big Backs are known to have what?", a: "c" },
-      { q: "What do stretchy pants provide?", a: "c" },
-      { q: "What’s a side effect of Big Backing too hard?", a: "c" },
-      { q: "What’s Joey Chestnut’s hot dog count record?", a: "d" },
-      { q: "What strategy helps Big Backs win contests?", a: "d" },
-      { q: "Which movie snack do Big Backs dominate?", a: "b" },
-      { q: "What is a Big Back most likely to do at a buffet?", a: "d" },
-      { q: "Least favorite snack of a Big Back?", a: "d" },
-      { q: "How do Big Backs prepare for meals?", a: "d" },
-      { q: "How many chicken wings can a pro eat in 30 mins?", a: "c" },
-      { q: "Which tool best describes a Big Back’s fork?", a: "c" },
-      { q: "What best describes a Big Back's stomach capacity?", a: "d" },
-      { q: "How many pizza slices are a snack for a Big Back?", a: "d" },
-      { q: "Is becoming a Big Back a lifestyle?", a: "b" }
+      {
+        q: "What is the average daily calorie intake for a competitive eater during training?",
+        a: ["2,000", "5,000", "10,000", "12,000"],
+        correct: 2
+      },
+      {
+        q: "Which food is known for expanding in your stomach, making it harder to eat more?",
+        a: ["Watermelon", "Bread", "Popcorn", "Rice"],
+        correct: 3
+      },
+      {
+        q: "What country is home to the biggest buffet (over 600 dishes)?",
+        a: ["USA", "China", "India", "Philippines"],
+        correct: 3
+      },
+      {
+        q: "Which organ is most responsible for digesting Big Back-level meals?",
+        a: ["Stomach", "Liver", "Small intestine", "Pancreas"],
+        correct: 0
+      },
+      {
+        q: "Which competitive eater is known for a tiny frame and a huge appetite?",
+        a: ["Joey Chestnut", "Kobayashi", "Guy Fieri", "Action Bronson"],
+        correct: 1
+      },
+      {
+        q: "What does 'food coma' refer to?",
+        a: ["A real coma", "Mental shutdown", "Sleepy after eating", "Digestive explosion"],
+        correct: 2
+      },
+      {
+        q: "Which animal has the biggest stomach compared to body size?",
+        a: ["Elephant", "Hippo", "Python", "Cow"],
+        correct: 2
+      },
+      {
+        q: "The 'Stomach Stretch Reflex' kicks in at what percent full?",
+        a: ["60%", "80%", "90%", "100%"],
+        correct: 1
+      },
+      {
+        q: "What food has a professional contest called the 'Taco Eating Championship'?",
+        a: ["Burritos", "Tacos", "Tamales", "Hot dogs"],
+        correct: 1
+      },
+      {
+        q: "What chemical signals your brain that you're full?",
+        a: ["Adrenaline", "Leptin", "Insulin", "Cortisol"],
+        correct: 1
+      },
+      {
+        q: "What’s the most pizza slices eaten in 10 minutes (world record)?",
+        a: ["46", "73", "83", "90"],
+        correct: 2
+      },
+      {
+        q: "What is a Big Back most likely to say?",
+        a: ["I’m full", "What’s for dessert?", "Is this keto?", "I'm cutting."],
+        correct: 1
+      },
+      {
+        q: "Why do Big Backs drink water before a contest?",
+        a: ["To stay hydrated", "To stretch their stomach", "Flavor enhancer", "They’re thirsty"],
+        correct: 1
+      },
+      {
+        q: "What's the least calorie-dense Big Back food?",
+        a: ["Peanut butter", "Celery", "Cheesecake", "French fries"],
+        correct: 1
+      },
+      {
+        q: "What food challenge is often undefeated at diners?",
+        a: ["10 Egg Omelet", "5lb Burrito", "Mountain of Pancakes", "Quad Bacon Burger"],
+        correct: 2
+      },
+      {
+        q: "Which fast food item has the most calories?",
+        a: ["Big Mac", "KFC Bowl", "Five Guys Fries", "Taco Bell Quesarito"],
+        correct: 2
+      },
+      {
+        q: "The 'bottomless pit' expression best describes...",
+        a: ["A cavern", "A void", "A Big Back stomach", "An abyss"],
+        correct: 2
+      },
+      {
+        q: "Why do Big Backs unbutton their pants after a meal?",
+        a: ["Airflow", "Comfort", "Extra space", "It's tradition"],
+        correct: 2
+      },
+      {
+        q: "What does the term 'food baby' usually mean?",
+        a: ["Actual baby", "Burp", "Bloating", "Craving dessert"],
+        correct: 2
+      },
+      {
+        q: "Most food eaten in 8 minutes (hot dogs, Joey Chestnut)?",
+        a: ["45", "63", "71", "76"],
+        correct: 3
+      },
+      {
+        q: "What’s a classic Big Back excuse?",
+        a: ["It’s leg day", "It’s a cheat meal", "I’m bulking", "All of the above"],
+        correct: 3
+      },
+      {
+        q: "Which food expands the most after being eaten?",
+        a: ["Rice", "Popcorn", "Bread", "Pasta"],
+        correct: 1
+      },
+      {
+        q: "Biggest Big Back move?",
+        a: ["Dessert first", "Mid-meal nap", "Triple dinner plate", "Ordering everything"],
+        correct: 3
+      },
+      {
+        q: "Which of these is NOT a food challenge?",
+        a: ["Inferno Wings", "Mega Nachos", "Mt. Everest Sundae", "Vegetable Platter"],
+        correct: 3
+      },
+      {
+        q: "A Big Back’s worst nightmare?",
+        a: ["Salad bar", "Small portions", "Running out of ranch", "All of the above"],
+        correct: 3
+      },
+      {
+        q: "How many wings did the wing-eating champ eat in 30 minutes?",
+        a: ["104", "216", "300", "501"],
+        correct: 2
+      },
+      {
+        q: "What utensil is optional for a Big Back?",
+        a: ["Fork", "Spoon", "Shovel", "All of the above"],
+        correct: 2
+      },
+      {
+        q: "What sound signals a satisfied Big Back?",
+        a: ["A sigh", "A burp", "A nap", "All of the above"],
+        correct: 3
+      },
+      {
+        q: "Most common Big Back meal combo?",
+        a: ["Burger and shake", "Double everything", "One of each", "All of the above"],
+        correct: 3
+      },
+      {
+        q: "Final Big Back test: Can you still eat after dessert?",
+        a: ["No", "Yes", "Only if it’s pizza", "Only on weekends"],
+        correct: 1
+      }
     ];
 
-    function showSection(id) {
-      document.querySelectorAll("#homeScreen, #quizSection, #leaderboardSection, #certificateSection").forEach(el => el.classList.add("hidden"));
-      document.getElementById(id).classList.remove("hidden");
-      if (id === 'leaderboardSection') renderLeaderboard();
-    }
+    const quizForm = document.getElementById("quizForm");
+    const questionsContainer = document.getElementById("questions");
 
-    document.getElementById("questions").innerHTML = questions.map((q, i) => `
-      <div class="question-box">
-        <p><strong>Q${i + 1}:</strong> ${q.q}</p>
-        <label><input type="radio" name="q${i}" value="a" required> A</label>
-        <label><input type="radio" name="q${i}" value="b"> B</label>
-        <label><input type="radio" name="q${i}" value="c"> C</label>
-        <label><input type="radio" name="q${i}" value="d"> D</label>
-      </div>`).join("");
+    questions.forEach((q, index) => {
+      const div = document.createElement("div");
+      div.className = "question";
+      div.innerHTML = `<h3>${index + 1}. ${q.q}</h3>` +
+        q.a.map((opt, i) => `
+          <label>
+            <input type="radio" name="q${index}" value="${i}" required />
+            ${String.fromCharCode(65 + i)}. ${opt}
+          </label><br/>
+        `).join("");
+      questionsContainer.appendChild(div);
+    });
 
-    document.getElementById("quizForm").onsubmit = function (e) {
+    quizForm.addEventListener("submit", function (e) {
       e.preventDefault();
-      const name = document.getElementById("userName").value;
-      const email = document.getElementById("userEmail").value;
-      const answers = questions.map((q, i) => document.querySelector(`input[name='q${i}']:checked`)?.value);
-      const score = answers.filter((a, i) => a === questions[i].a).length;
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      let score = 0;
+      const correctAnswers = [];
 
-      // Save to leaderboard
-      const scores = JSON.parse(localStorage.getItem("bigBackScores") || "[]");
-      scores.push({ name, score });
-      localStorage.setItem("bigBackScores", JSON.stringify(scores));
+      questions.forEach((q, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        if (selected && parseInt(selected.value) === q.correct) {
+          score++;
+          correctAnswers.push(String.fromCharCode(65 + q.correct));
+        } else {
+          correctAnswers.push("✗");
+        }
+      });
 
-      // Send email
-      emailjs.send("Big_back", "template_0br65x8", {
-        name,
-        email,
-        score,
-        answers: answers.join(", ")
+      emailjs.send('Big_back', 'template_0br65x8', {
+        user_name: name,
+        user_email: email,
+        quiz_score: score,
+        quiz_correct_answers: correctAnswers.join(', ')
       }).then(() => {
-        document.getElementById("certName").textContent = `${name}, you scored ${score}/30!`;
-        document.getElementById("certScore").textContent = `Score: ${score}/30`;
-        showSection("certificateSection");
+        alert("Email sent! You are now certified Big Back!");
+        quizForm.reset();
+      }, (error) => {
+        alert("Email failed to send: " + error);
       });
-    };
-
-    function renderLeaderboard() {
-      const list = document.getElementById("leaderboardList");
-      const scores = JSON.parse(localStorage.getItem("bigBackScores") || "[]");
-      const sorted = scores.sort((a, b) => b.score - a.score).slice(0, 10);
-      list.innerHTML = sorted.map(s => `<li><strong>${s.name}</strong> – ${s.score}/30</li>`).join("");
-    }
-
-    function downloadCertificate() {
-      html2canvas(document.getElementById("certificateSection")).then(canvas => {
-        const link = document.createElement('a');
-        link.download = 'Big_Back_Certificate.png';
-        link.href = canvas.toDataURL();
-        link.click();
-      });
-    }
+    });
   </script>
 </body>
 </html>
