@@ -2,115 +2,236 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Big Back Certification Quiz</title>
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; background-color: #fff5e6; }
-    .question { margin-bottom: 20px; }
-    .question h3 { margin-bottom: 10px; }
-    .question label { display: block; margin: 5px 0; }
-    button { padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #ff9933; border: none; border-radius: 5px; }
-    input[type="text"], input[type="email"] { width: 100%; padding: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .question h3 {
+      margin-bottom: 5px;
+    }
   </style>
 </head>
 <body>
-  <h1>Big Back Certification Test</h1>
-  <p>Only the truest of Big Backs can pass this. Do you eat like a legend? Prove it.</p>
-
+  <h1>Big Back Certification Quiz</h1>
   <form id="quizForm">
-    <label>Name:</label>
-    <input type="text" id="name" required />
-
-    <label>Email:</label>
-    <input type="email" id="email" required />
-
-    <div id="quiz"></div>
+    <label for="name">Name:</label><br />
+    <input type="text" id="name" name="name" required><br /><br />
+    <label for="email">Email:</label><br />
+    <input type="email" id="email" name="email" required><br /><br />
+    
+    <div id="questions"></div>
 
     <button type="submit">Submit</button>
   </form>
 
   <script>
-    emailjs.init("fBwObR_tKYEjPcn4G");
+    emailjs.init('fBwObR_tKYEjPcn4G');
 
     const questions = [
-      { q: "1. Which country eats the most pizza per capita?", o: ["Italy", "USA", "Norway", "Big Back Nation"], a: 2 },
-      { q: "2. What food can expand in your stomach up to 40 times its size?", o: ["Rice", "Gum", "Popcorn", "Hot dogs at a BBQ"], a: 0 },
-      { q: "3. Which animal eats up to 100 pounds of bamboo a day?", o: ["Elephant", "Panda", "Big Back Bear", "Cow"], a: 1 },
-      { q: "4. What’s the most stolen food in the world?", o: ["Candy", "Cheese", "Bacon", "Chicken nuggets"], a: 1 },
-      { q: "5. Which fast food item is the most ordered in America?", o: ["Taco", "Fried Chicken", "Burger", "Pizza"], a: 2 },
-      { q: "6. What’s the Guinness World Record for most hot dogs eaten in 10 mins?", o: ["45", "53", "76", "100 Big Back dogs"], a: 2 },
-      { q: "7. Which organ tells your brain you’re full?", o: ["Heart", "Stomach", "Liver", "Big Back Sensors"], a: 1 },
-      { q: "8. What food item is illegal to carry in groups in Georgia on Sundays?", o: ["Cornbread", "Ice Cream Cone", "Fried Chicken", "Mac & Cheese"], a: 1 },
-      { q: "9. Which of these is NOT a real sandwich?", o: ["Luther Burger", "Fool’s Gold Loaf", "Peanut Pickle Melt", "Crunchy Towel Wrap"], a: 3 },
-      { q: "10. What food holds the record for longest noodle ever made?", o: ["Udon", "Ramen", "Spaghetti", "Yarn"], a: 2 },
-      { q: "11. What country invented French fries?", o: ["France", "Belgium", "USA", "Big Back Land"], a: 1 },
-      { q: "12. Which nut is used to make marzipan?", o: ["Almond", "Peanut", "Pecan", "Big Back Nut"], a: 0 },
-      { q: "13. Which bird is known to overeat before long flights?", o: ["Eagle", "Duck", "Goose", "Penguin"], a: 2 },
-      { q: "14. What dessert shares a name with a weather phenomenon?", o: ["Hurricane Cake", "Tornado Pie", "Baked Alaska", "Foggy Fudge"], a: 2 },
-      { q: "15. What vegetable was the first to be grown in space?", o: ["Potato", "Carrot", "Lettuce", "Cosmic Cucumber"], a: 2 },
-      { q: "16. How many pounds of potatoes does the average American eat per year?", o: ["30 lbs", "70 lbs", "120 lbs", "Infinite"], a: 2 },
-      { q: "17. What vitamin is found in sunlight and cheese?", o: ["A", "B12", "D", "G for Grub"], a: 2 },
-      { q: "18. What food is the moon supposedly made of in nursery rhymes?", o: ["Popcorn", "Cheese", "Eggs", "Rice Cake"], a: 1 },
-      { q: "19. Which of these is NOT a type of pasta?", o: ["Fusilli", "Rotini", "Muffini", "Penne"], a: 2 },
-      { q: "20. What food can Big Backs never eat just one of?", o: ["Dorito", "Apple Slice", "Cheeto", "All of the above"], a: 3 },
-      { q: "21. What’s the scientific name for the fear of cooking?", o: ["Mageirocophobia", "Cookitis", "Spatulanoia", "Flame Fear"], a: 0 },
-      { q: "22. Which fast food chain has a bell in its logo?", o: ["Taco Bell", "Burger King", "McDonald’s", "Back Bell Bites"], a: 0 },
-      { q: "23. Which meat is in a traditional gyro?", o: ["Beef", "Lamb", "Chicken", "Back Beef"], a: 1 },
-      { q: "24. What is tofu made from?", o: ["Beans", "Rice", "Soy", "Big Back Blocks"], a: 2 },
-      { q: "25. Which of these is a real fish?", o: ["Big Back Bass", "Blobfish", "Crinkle Carp", "Soggy Snapper"], a: 1 },
-      { q: "26. What is the national dish of Scotland?", o: ["Haggis", "Back Pudding", "Meatballs", "Choco-Sheep"], a: 0 },
-      { q: "27. Which snack has holes and is tossed in powdered sugar?", o: ["Donut", "Funnel Cake", "Zeppole", "Air Bun"], a: 2 },
-      { q: "28. What’s the name of the sandwich that uses waffles instead of bread?", o: ["Breakfastwich", "Wafflewich", "Chick-n-Wich", "Backwich"], a: 1 },
-      { q: "29. How many Big Backs does it take to finish a buffet?", o: ["10", "5", "1", "Infinite loop"], a: 2 },
-      { q: "30. What is the main food group for a Big Back?", o: ["Pizza", "Meat", "Everything edible", "Protein powder and pride"], a: 2 },
+      {
+        q: "What is the average daily calorie intake for a competitive eater during training?",
+        a: ["2,000", "5,000", "10,000", "12,000"],
+        correct: 2
+      },
+      {
+        q: "Which food is known for expanding in your stomach, making it harder to eat more?",
+        a: ["Watermelon", "Bread", "Popcorn", "Rice"],
+        correct: 3
+      },
+      {
+        q: "What country is home to the biggest buffet (over 600 dishes)?",
+        a: ["USA", "China", "India", "Philippines"],
+        correct: 3
+      },
+      {
+        q: "Which organ is most responsible for digesting Big Back-level meals?",
+        a: ["Stomach", "Liver", "Small intestine", "Pancreas"],
+        correct: 0
+      },
+      {
+        q: "Which competitive eater is known for a tiny frame and a huge appetite?",
+        a: ["Joey Chestnut", "Kobayashi", "Guy Fieri", "Action Bronson"],
+        correct: 1
+      },
+      {
+        q: "What does 'food coma' refer to?",
+        a: ["A real coma", "Mental shutdown", "Sleepy after eating", "Digestive explosion"],
+        correct: 2
+      },
+      {
+        q: "Which animal has the biggest stomach compared to body size?",
+        a: ["Elephant", "Hippo", "Python", "Cow"],
+        correct: 2
+      },
+      {
+        q: "The 'Stomach Stretch Reflex' kicks in at what percent full?",
+        a: ["60%", "80%", "90%", "100%"],
+        correct: 1
+      },
+      {
+        q: "What food has a professional contest called the 'Taco Eating Championship'?",
+        a: ["Burritos", "Tacos", "Tamales", "Hot dogs"],
+        correct: 1
+      },
+      {
+        q: "What chemical signals your brain that you're full?",
+        a: ["Adrenaline", "Leptin", "Insulin", "Cortisol"],
+        correct: 1
+      },
+      {
+        q: "What’s the most pizza slices eaten in 10 minutes (world record)?",
+        a: ["46", "73", "83", "90"],
+        correct: 2
+      },
+      {
+        q: "What is a Big Back most likely to say?",
+        a: ["I’m full", "What’s for dessert?", "Is this keto?", "I'm cutting."],
+        correct: 1
+      },
+      {
+        q: "Why do Big Backs drink water before a contest?",
+        a: ["To stay hydrated", "To stretch their stomach", "Flavor enhancer", "They’re thirsty"],
+        correct: 1
+      },
+      {
+        q: "What's the least calorie-dense Big Back food?",
+        a: ["Peanut butter", "Celery", "Cheesecake", "French fries"],
+        correct: 1
+      },
+      {
+        q: "What food challenge is often undefeated at diners?",
+        a: ["10 Egg Omelet", "5lb Burrito", "Mountain of Pancakes", "Quad Bacon Burger"],
+        correct: 2
+      },
+      {
+        q: "Which fast food item has the most calories?",
+        a: ["Big Mac", "KFC Bowl", "Five Guys Fries", "Taco Bell Quesarito"],
+        correct: 2
+      },
+      {
+        q: "The 'bottomless pit' expression best describes...",
+        a: ["A cavern", "A void", "A Big Back stomach", "An abyss"],
+        correct: 2
+      },
+      {
+        q: "Why do Big Backs unbutton their pants after a meal?",
+        a: ["Airflow", "Comfort", "Extra space", "It's tradition"],
+        correct: 2
+      },
+      {
+        q: "What does the term 'food baby' usually mean?",
+        a: ["Actual baby", "Burp", "Bloating", "Craving dessert"],
+        correct: 2
+      },
+      {
+        q: "Most food eaten in 8 minutes (hot dogs, Joey Chestnut)?",
+        a: ["45", "63", "71", "76"],
+        correct: 3
+      },
+      {
+        q: "What’s a classic Big Back excuse?",
+        a: ["It’s leg day", "It’s a cheat meal", "I’m bulking", "All of the above"],
+        correct: 3
+      },
+      {
+        q: "Which food expands the most after being eaten?",
+        a: ["Rice", "Popcorn", "Bread", "Pasta"],
+        correct: 1
+      },
+      {
+        q: "Biggest Big Back move?",
+        a: ["Dessert first", "Mid-meal nap", "Triple dinner plate", "Ordering everything"],
+        correct: 3
+      },
+      {
+        q: "Which of these is NOT a food challenge?",
+        a: ["Inferno Wings", "Mega Nachos", "Mt. Everest Sundae", "Vegetable Platter"],
+        correct: 3
+      },
+      {
+        q: "A Big Back’s worst nightmare?",
+        a: ["Salad bar", "Small portions", "Running out of ranch", "All of the above"],
+        correct: 3
+      },
+      {
+        q: "How many wings did the wing-eating champ eat in 30 minutes?",
+        a: ["104", "216", "300", "501"],
+        correct: 2
+      },
+      {
+        q: "What utensil is optional for a Big Back?",
+        a: ["Fork", "Spoon", "Shovel", "All of the above"],
+        correct: 2
+      },
+      {
+        q: "What sound signals a satisfied Big Back?",
+        a: ["A sigh", "A burp", "A nap", "All of the above"],
+        correct: 3
+      },
+      {
+        q: "Most common Big Back meal combo?",
+        a: ["Burger and shake", "Double everything", "One of each", "All of the above"],
+        correct: 3
+      },
+      {
+        q: "Final Big Back test: Can you still eat after dessert?",
+        a: ["No", "Yes", "Only if it’s pizza", "Only on weekends"],
+        correct: 1
+      }
     ];
 
-    const quizContainer = document.getElementById("quiz");
+    const quizForm = document.getElementById("quizForm");
+    const questionsContainer = document.getElementById("questions");
 
-    questions.forEach((q, i) => {
+    questions.forEach((q, index) => {
       const div = document.createElement("div");
-      div.classList.add("question");
-      div.innerHTML = `<h3>${q.q}</h3>` +
-        q.o.map((option, j) => `
+      div.className = "question";
+      div.innerHTML = `<h3>${index + 1}. ${q.q}</h3>` +
+        q.a.map((opt, i) => `
           <label>
-            <input type="radio" name="q${i}" value="${j}" required> ${option}
-          </label>
+            <input type="radio" name="q${index}" value="${i}" required />
+            ${String.fromCharCode(65 + i)}. ${opt}
+          </label><br/>
         `).join("");
-      quizContainer.appendChild(div);
+      questionsContainer.appendChild(div);
     });
 
-    document.getElementById("quizForm").addEventListener("submit", function(e) {
+    quizForm.addEventListener("submit", function (e) {
       e.preventDefault();
-      let score = 0;
-      questions.forEach((q, i) => {
-        const answer = document.querySelector(`input[name=q${i}]:checked`);
-        if (answer && parseInt(answer.value) === q.a) score++;
-      });
-
       const name = document.getElementById("name").value;
       const email = document.getElementById("email").value;
+      let score = 0;
+      const correctAnswers = [];
 
-      if (score >= 20) {
-        emailjs.send("Big_back", "template_0br65x8", {
-          to_name: name,
-          to_email: email,
-          message: `Certified Big Back with score: ${score}/30`
-        }).then(() => {
-          alert("You passed! Certification sent via EmailJS.");
-        }, (err) => {
-          alert("Email failed: " + JSON.stringify(err));
-        });
-      } else {
-        alert(`Score: ${score}/30. You need 20+ to pass.`);
-      }
+      questions.forEach((q, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        if (selected && parseInt(selected.value) === q.correct) {
+          score++;
+          correctAnswers.push(String.fromCharCode(65 + q.correct));
+        } else {
+          correctAnswers.push("✗");
+        }
+      });
+
+      emailjs.send('Big_back', 'template_0br65x8', {
+        user_name: name,
+        user_email: email,
+        quiz_score: score,
+        quiz_correct_answers: correctAnswers.join(', ')
+      }).then(() => {
+        alert("Email sent! You are now certified Big Back!");
+        quizForm.reset();
+      }, (error) => {
+        alert("Email failed to send: " + error);
+      });
     });
   </script>
 </body>
 </html>
-
-<!--
-Answer Key:
-1: 2, 2: 0, 3: 1, 4: 1, 5: 2, 6: 2, 7: 1, 8: 1, 9: 3, 10: 2,
-11: 1, 12: 0, 13: 2, 14: 2, 15: 2, 16: 2, 17: 2, 18: 1, 19: 2, 20: 3,
-21: 0, 22: 0, 23: 1, 24: 2, 25: 1, 26: 0, 27: 2, 28: 1, 29: 2, 30: 2
